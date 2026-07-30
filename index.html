@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>中華歷史時光長廊 - 互動式朝代學習平台</title>
-  <meta name="description" content="專為學生打造的中華歷史互動學習網頁，涵蓋夏商周、秦漢、魏晉南北朝、隋唐、宋元與明清各朝代歷史概覽、重要事件時間軸、關鍵人物故事與課後測驗。">
+  <title>世界歷史時光長廊 - 中西歷史互動學習平台</title>
+  <meta name="description" content="專為學生打造的中西歷史互動學習網頁，涵蓋中華朝代（夏商周、秦漢、隋唐、宋元、明清）與西方文明歷史（古埃及、古希臘、古羅馬、中世紀、文藝復興、工業革命）。">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,8 +14,8 @@
     <div class="logo-area" onclick="backToCatalog()">
       <div class="logo-badge">史</div>
       <div class="logo-text">
-        <h1>中華歷史時光長廊</h1>
-        <p>CHINESE HISTORY LEARNING GALLERY</p>
+        <h1>世界歷史時光長廊</h1>
+        <p>GLOBAL HISTORY LEARNING GALLERY</p>
       </div>
     </div>
     
@@ -24,10 +24,10 @@
         🏆 學習總分：<span id="total-score">0 分</span>
       </div>
       <div class="progress-pill">
-        📚 已研讀朝代：<span id="completed-count">0 / 6</span>
+        📚 已研讀單元：<span id="completed-count">0 / 12</span>
       </div>
       <button class="btn-catalog-back" id="btn-back-catalog" onclick="backToCatalog()">
-        🏠 朝代目錄
+        🏠 歷史目錄
       </button>
     </div>
   </header>
@@ -39,72 +39,117 @@
     <section class="hero-banner">
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <span class="hero-tag">✨ 互動式歷史自主學習</span>
-        <h2 class="hero-title">穿越五千年華夏時空<br>探索歷代興衰與文明精華</h2>
-        <p class="hero-subtitle">點擊下方朝代卡片，即刻展開深度歷史學習之旅！包含精彩歷史故事、關鍵事件時間軸與即時隨堂測驗。</p>
+        <span class="hero-tag">✨ 中西歷史全方位自主學習</span>
+        <h2 class="hero-title">穿越東西方五千年文明長河<br>探索歷代興衰與人類文明精華</h2>
+        <p class="hero-subtitle">切換下方「中華歷史 / 西方歷史」選單，點擊歷史單元即可展開深度學習！包含重大事件時間軸、經典人物故事與課後隨堂測驗。</p>
+
+        <!-- 區域切換 Tab (全區域 / 中華歷史 / 西方歷史) -->
+        <div class="region-selector-bar">
+          <button class="region-tab active" data-region="all">🌍 全球歷史總覽</button>
+          <button class="region-tab" data-region="chinese">🇨🇳 中華歷史長廊</button>
+          <button class="region-tab" data-region="western">🏛️ 西方文明長廊</button>
+        </div>
 
         <!-- 搜尋與過濾 Bar -->
         <div class="filter-bar">
           <div class="search-box">
             <span class="search-icon">🔍</span>
-            <input type="text" id="search-input" placeholder="搜尋朝代、歷史人物、重要事件（如：絲綢之路、四大發明）...">
+            <input type="text" id="search-input" placeholder="搜尋朝代、文明、人物或事件（如：絲綢之路、金字塔、雅典民主、達芬奇）...">
           </div>
           <div class="filter-tags">
-            <button class="filter-btn active" data-filter="all">全部朝代</button>
+            <button class="filter-btn active" data-filter="all">全部主題</button>
             <button class="filter-btn" data-filter="早期文明">早期文明</button>
+            <button class="filter-btn" data-filter="大河文明">大河文明</button>
             <button class="filter-btn" data-filter="帝國奠基">帝國奠基</button>
-            <button class="filter-btn" data-filter="割據與融合">割據與融合</button>
+            <button class="filter-btn" data-filter="古典搖籃">古典搖籃</button>
+            <button class="filter-btn" data-filter="超級強權">超級強權</button>
             <button class="filter-btn" data-filter="萬國來朝">萬國來朝</button>
-            <button class="filter-btn" data-filter="科技與版圖">科技與版圖</button>
-            <button class="filter-btn" data-filter="近現代轉折">近現代轉折</button>
+            <button class="filter-btn" data-filter="信仰與騎士">信仰與騎士</button>
+            <button class="filter-btn" data-filter="理性與探索">理性與探索</button>
+            <button class="filter-btn" data-filter="科技與變革">科技與變革</button>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- 朝代時間軸快速導覽 Track -->
+    <!-- 歷史時間軸快速導覽 Track -->
     <section class="timeline-track-container">
-      <h3 class="section-label">⏳ 中華朝代演進軸 (Chronological Timeline)</h3>
+      <h3 class="section-label">⏳ 世界文明演進軸 (Chronological Timeline)</h3>
       <div class="timeline-nav">
+        <!-- 中華歷史點 -->
         <div class="timeline-node" data-dynasty="shang-zhou" onclick="openDynastyView('shang-zhou')">
           <div class="node-dot"></div>
           <span class="node-label">夏商周</span>
           <span class="node-years">前2070 - 前256</span>
         </div>
+        <!-- 古埃及與兩河 -->
+        <div class="timeline-node" data-dynasty="egypt-meso" onclick="openDynastyView('egypt-meso')">
+          <div class="node-dot" style="border-color: #E5C158;"></div>
+          <span class="node-label">古埃及/兩河</span>
+          <span class="node-years">前3100 - 前539</span>
+        </div>
+        <!-- 秦漢 -->
         <div class="timeline-node" data-dynasty="qin-han" onclick="openDynastyView('qin-han')">
           <div class="node-dot"></div>
           <span class="node-label">秦漢</span>
-          <span class="node-years">前221 - 公元220</span>
+          <span class="node-years">前221 - 220</span>
         </div>
-        <div class="timeline-node" data-dynasty="wei-jin" onclick="openDynastyView('wei-jin')">
-          <div class="node-dot"></div>
-          <span class="node-label">魏晉南北朝</span>
-          <span class="node-years">220 - 589</span>
+        <!-- 古希臘羅馬 -->
+        <div class="timeline-node" data-dynasty="greece" onclick="openDynastyView('greece')">
+          <div class="node-dot" style="border-color: #E5C158;"></div>
+          <span class="node-label">古希臘</span>
+          <span class="node-years">前800 - 前146</span>
         </div>
+        <div class="timeline-node" data-dynasty="rome" onclick="openDynastyView('rome')">
+          <div class="node-dot" style="border-color: #E5C158;"></div>
+          <span class="node-label">古羅馬</span>
+          <span class="node-years">前753 - 476</span>
+        </div>
+        <!-- 隋唐 -->
         <div class="timeline-node" data-dynasty="sui-tang" onclick="openDynastyView('sui-tang')">
           <div class="node-dot"></div>
           <span class="node-label">隋唐</span>
           <span class="node-years">581 - 907</span>
         </div>
+        <!-- 中世紀 -->
+        <div class="timeline-node" data-dynasty="medieval" onclick="openDynastyView('medieval')">
+          <div class="node-dot" style="border-color: #E5C158;"></div>
+          <span class="node-label">歐洲中世紀</span>
+          <span class="node-years">476 - 1453</span>
+        </div>
+        <!-- 宋元 -->
         <div class="timeline-node" data-dynasty="song-yuan" onclick="openDynastyView('song-yuan')">
           <div class="node-dot"></div>
           <span class="node-label">宋元</span>
           <span class="node-years">960 - 1368</span>
         </div>
+        <!-- 文藝復興 -->
+        <div class="timeline-node" data-dynasty="renaissance" onclick="openDynastyView('renaissance')">
+          <div class="node-dot" style="border-color: #E5C158;"></div>
+          <span class="node-label">文藝復興</span>
+          <span class="node-years">14 - 17世紀</span>
+        </div>
+        <!-- 明清 -->
         <div class="timeline-node" data-dynasty="ming-qing" onclick="openDynastyView('ming-qing')">
           <div class="node-dot"></div>
           <span class="node-label">明清</span>
           <span class="node-years">1368 - 1912</span>
+        </div>
+        <!-- 工業革命近現代 -->
+        <div class="timeline-node" data-dynasty="modern-west" onclick="openDynastyView('modern-west')">
+          <div class="node-dot" style="border-color: #E5C158;"></div>
+          <span class="node-label">近現代西方</span>
+          <span class="node-years">18 - 20世紀</span>
         </div>
       </div>
     </section>
 
     <!-- 朝代卡片目錄區 (Catalog Grid) -->
     <section class="catalog-section">
-      <h3 class="section-label">🏛️ 朝代學習目錄 (Select Era to Learn)</h3>
+      <h3 class="section-label">🏛️ 歷史學習目錄 (Select Era to Learn)</h3>
       <div class="dynasty-grid" id="dynasty-grid">
-        <!-- 由 script.js 動態渲染朝代卡片 -->
+        <!-- 由 script.js 動態渲染朝代與文明卡片 -->
       </div>
     </section>
 
@@ -129,16 +174,16 @@
     <nav class="breadcrumb">
       <a onclick="backToCatalog()">首頁</a>
       <span>/</span>
-      <a onclick="backToCatalog()">朝代目錄</a>
+      <a onclick="backToCatalog()">歷史目錄</a>
       <span>/</span>
-      <span id="detail-breadcrumb-current" style="color: var(--primary-gold);">朝代名稱</span>
+      <span id="detail-breadcrumb-current" style="color: var(--primary-gold);">單元名稱</span>
     </nav>
 
     <!-- 朝代 Header Banner -->
     <div class="dynasty-header-card" id="dynasty-header-bg">
       <div class="header-content-inner">
-        <h2 class="dynasty-title-lg" id="detail-title">朝代名稱</h2>
-        <p class="dynasty-subtitle-lg" id="detail-subtitle">年份與首都資訊</p>
+        <h2 class="dynasty-title-lg" id="detail-title">單元名稱</h2>
+        <p class="dynasty-subtitle-lg" id="detail-subtitle">年份與都城資訊</p>
       </div>
     </div>
 
@@ -171,8 +216,8 @@
 
   <!-- 頁尾 Footer -->
   <footer>
-    <p>© 2026 中華歷史時光長廊 · 互動式歷史自主學習平台</p>
-    <p style="margin-top: 0.4rem; color: var(--text-muted); font-size: 0.78rem;">專為學生設計的探索式歷史網頁教材 | 支援視覺閱讀、時間軸與線上評分</p>
+    <p>© 2026 世界歷史時光長廊 · 中西歷史互動學習平台</p>
+    <p style="margin-top: 0.4rem; color: var(--text-muted); font-size: 0.78rem;">專為學生設計的探索式歷史網頁教材 | 涵蓋中華與西方兩大文明體系</p>
   </footer>
 
   <script src="script.js"></script>

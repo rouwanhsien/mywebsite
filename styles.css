@@ -220,11 +220,56 @@ button {
   -webkit-text-fill-color: transparent;
 }
 
+/* Hero Subtitle */
 .hero-subtitle {
   font-size: 1.05rem;
   color: var(--text-sub);
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.5rem;
   font-weight: 300;
+}
+
+/* Region Selector Bar (中華歷史 / 西方歷史) */
+.region-selector-bar {
+  display: flex;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.region-tab {
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-gold);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.region-tab:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--primary-gold);
+}
+
+.region-tab.active {
+  background: linear-gradient(135deg, var(--crimson-red), #B83232);
+  color: #FFF;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 15px rgba(168, 46, 46, 0.5);
+}
+
+.region-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  background: rgba(26, 35, 56, 0.85);
+  border: 1px solid var(--border-gold);
+  color: #FFF;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
 }
 
 /* Search and Filter Controls */

@@ -1,12 +1,14 @@
 /* ==========================================================================
-   中華歷史時光長廊 - 腳本邏輯 (script.js)
-   功能：頁面切換、數據渲染、過濾搜尋、互動測驗與學習進度管理
+   中華與西方歷史長廊 - 核心控制腳本 (script.js)
+   功能：中西歷史區域切換、朝代資料庫、搜尋過濾、互動測驗與學習進度管理
    ========================================================================== */
 
-// 歷史朝代資料庫
+// 歷史資料庫 (包含中華歷史與西方歷史)
 const DYNASTIES_DATA = {
+  // === 中華歷史 (Chinese History) ===
   "shang-zhou": {
     id: "shang-zhou",
+    region: "chinese",
     title: "夏商周時代",
     years: "約前2070 - 前256年",
     eraTag: "早期文明",
@@ -16,7 +18,7 @@ const DYNASTIES_DATA = {
     capital: "鎬京 / 洛邑 / 殷",
     duration: "約1800年",
     overview: `夏商周是中華文明的早期階段。夏朝開啟「家天下」時代；商朝以發達的青銅文化與甲骨文著稱；周朝則建立起嚴密的「封建親戚，以藩屏周」宗法禮樂制度。
-    到了春秋戰國時期，王室衰微，諸侯割據，激發了極大的思想活力，孔子、老子、墨子、韓非子等思想家輩出，形成了影響深遠的「百家爭鳴」。`,
+    到了春秋戰國時期，王室衰微，諸候割據，激發了極大的思想活力，孔子、老子、墨子、韓非子等思想家輩出，形成了影響深遠的「百家爭鳴」。`,
     highlight: "「周公吐哺，天下歸心。」禮樂制度的建立奠定了中國傳統社會的道德規範與秩序基礎。",
     timeline: [
       { year: "約前2070年", title: "夏朝建立", desc: "禹傳子啟，標誌著「公天下」轉變為「家天下」。" },
@@ -59,6 +61,7 @@ const DYNASTIES_DATA = {
   },
   "qin-han": {
     id: "qin-han",
+    region: "chinese",
     title: "秦漢帝國",
     years: "前221 - 公元220年",
     eraTag: "帝國奠基",
@@ -111,6 +114,7 @@ const DYNASTIES_DATA = {
   },
   "wei-jin": {
     id: "wei-jin",
+    region: "chinese",
     title: "魏晉南北朝",
     years: "公元220 - 589年",
     eraTag: "割據與融合",
@@ -163,6 +167,7 @@ const DYNASTIES_DATA = {
   },
   "sui-tang": {
     id: "sui-tang",
+    region: "chinese",
     title: "隋唐盛世",
     years: "公元581 - 907年",
     eraTag: "萬國來朝",
@@ -215,6 +220,7 @@ const DYNASTIES_DATA = {
   },
   "song-yuan": {
     id: "song-yuan",
+    region: "chinese",
     title: "宋元時期",
     years: "公元960 - 1368年",
     eraTag: "科技與版圖",
@@ -267,6 +273,7 @@ const DYNASTIES_DATA = {
   },
   "ming-qing": {
     id: "ming-qing",
+    region: "chinese",
     title: "明清時代",
     years: "公元1368 - 1912年",
     eraTag: "近現代轉折",
@@ -316,21 +323,339 @@ const DYNASTIES_DATA = {
         explanation: "辛亥革命成功推翻了清王朝，建立了亞洲第一個共和國。"
       }
     ]
+  },
+
+  // === 西方歷史 (Western History) ===
+  "egypt-meso": {
+    id: "egypt-meso",
+    region: "western",
+    title: "古埃及與美索不達米亞",
+    years: "約前3100 - 前539年",
+    eraTag: "大河文明",
+    bgImage: "assets/western_hero.jpg",
+    desc: "兩河流域與尼羅河孕育出的燦爛古文明，誕生了世界最早的楔形文字、金字塔建築與《漢摩拉比法典》。",
+    tags: ["金字塔", "漢摩拉比法典", "楔形文字", "尼羅河"],
+    capital: "孟菲斯 / 巴比倫 / 烏爾",
+    duration: "約2500年",
+    overview: `在底格里斯河與幼發拉底河交會的美索不達米亞（兩河流域），蘇美卡人發明了人類最早的楔形文字，古巴比倫王國頒布了著名的《漢摩拉比法典》。
+    與此同時，尼羅河流域的古埃及文明建立了龐大的法老專制國家，建造了矗立千年的金字塔與獅身人面像，並發展出太陽曆與象形文字。`,
+    highlight: "「以眼還眼，以牙還牙。」《漢摩拉比法典》是世界上第一部比較完備的成文法典。",
+    timeline: [
+      { year: "約前3500年", title: "蘇美文字誕生", desc: "發明楔形文字，人類正式進入有文字記載的歷史。" },
+      { year: "約前3100年", title: "古埃及統一", desc: "美尼斯統一上下埃及，建立第一王朝。" },
+      { year: "約前2560年", title: "吉薩大金字塔建造", desc: "胡夫法老興建世界上最大、最著名的石造建築金字塔。" },
+      { year: "約前1750年", title: "《漢摩拉比法典》頒布", desc: "古巴比倫國王漢摩拉比刻寫成文法典於玄武岩石碑上。" }
+    ],
+    figures: [
+      { name: "漢摩拉比", role: "古巴比倫帝王", icon: "⚖️", desc: "統一兩河流域，頒布著名的成文法典《漢摩拉比法典》。" },
+      { name: "胡夫", role: "古埃及法老", icon: "🔺", desc: "興建吉薩大金字塔，展現古埃及極致的建築技術與法老權力。" },
+      { name: "圖坦卡門", role: "埃及著名法老", icon: "👑", desc: "其黃金面具與保存完好的陵墓成為古埃及文明的極致代表。" }
+    ],
+    achievements: [
+      "🔺 **吉薩大金字塔**: 世界七大奇蹟中唯一保存至今的古代巨石建築。",
+      "📜 **楔形文字 & 象形文字**: 人類歷史上最早的成熟書寫體系。",
+      "⚖️ **《漢摩拉比法典》**: 刻在石碑上的古老成文法典，奠定法律文明體系。"
+    ],
+    quiz: [
+      {
+        question: "世界上已知最早的成文法典之一，奉行「以眼還眼」原則的是？",
+        options: ["A. 《十二銅表法》", "B. 《漢摩拉比法典》", "C. 《拿破崙法典》", "D. 《查士丁尼法典》"],
+        answer: 1,
+        explanation: "《漢摩拉比法典》由古巴比倫國王漢摩拉比頒布，刻於石碑之上。"
+      },
+      {
+        question: "蘇美人在美索不達米亞地區發明的世界上最早的文字體系被稱為？",
+        options: ["A. 象形文字", "B. 梵文", "C. 楔形文字", "D. 拉丁文"],
+        answer: 2,
+        explanation: "蘇美人用削尖的蘆葦桿在泥板上壓印文字，筆劃形似木楔，故稱楔形文字。"
+      },
+      {
+        question: "孕育出古埃及金字塔與法老文明的偉大河流是？",
+        options: ["A. 尼羅河", "B. 底格里斯河", "C. 亞馬遜河", "D. 多瑙河"],
+        answer: 0,
+        explanation: "古希臘歷史學家希羅多德曾說：「埃及是尼羅河的贈禮。」"
+      }
+    ]
+  },
+
+  "greece": {
+    id: "greece",
+    region: "western",
+    title: "古希臘文明",
+    years: "約前800 - 前146年",
+    eraTag: "古典搖籃",
+    bgImage: "assets/western_greece_rome.jpg",
+    desc: "西方文明與民主政治的搖籃。雅典城邦開創公民民主，蘇格拉底等哲學三哲與奧林匹克運動會影響後世至今。",
+    tags: ["雅典民主", "奧林匹克", "哲學三哲", "亞歷山大"],
+    capital: "雅典 / 斯巴達 / 馬其頓",
+    duration: "約650年",
+    overview: `古希臘由許多獨立的城邦組成，其中以追求民主與藝術的「雅典」和強調軍事紀律的「斯巴達」最著名。
+    雅典伯里克利時代將公民民主政治推向高峰。蘇格拉底、柏拉圖、亞里斯多德「哲學三哲」奠定了西洋哲學體系，亞歷山大大帝的東征則將希臘文化擴散至歐亞非廣袤土地。`,
+    highlight: "「未經審視的人生是不值得過的。」（蘇格拉底）希臘文明開啟了人類理性思考與民主探索。",
+    timeline: [
+      { year: "前776年", title: "第一屆古代奧林匹克運動會", desc: "在奧林匹亞舉辦競技大會，各城邦停戰和平競技。" },
+      { year: "前490年", title: "馬拉松戰役", desc: "雅典軍隊擊敗波斯帝國侵略，信使長跑傳捷報誕生馬拉松運動。" },
+      { year: "前431年", title: "伯羅奔尼撒戰爭爆發", desc: "雅典同盟與斯巴達同盟爆發內戰，希臘城邦逐漸走向衰落。" },
+      { year: "前334年", title: "亞歷山大大帝東征", desc: "建立橫跨歐亞非的龐大帝國，開創希臘化時代。" }
+    ],
+    figures: [
+      { name: "蘇格拉底", role: "哲學宗師", icon: "🏛️", desc: "倡導詰問法與理性思考，被譽為西方哲學的奠基人。" },
+      { name: "亞歷山大大帝", role: "馬基頓國王", icon: "⚔️", desc: "軍事奇才，創立龐大帝國，將希臘文化推廣至東方。" },
+      { name: "伯里克利", role: "雅典政治家", icon: "🗳️", desc: "推動雅典黃金時代，將城邦民主政治發展至鼎盛。" }
+    ],
+    achievements: [
+      "🏛️ **帕德嫩神廟**: 希臘古典建築最高成就，展現黃金比例美學。",
+      "🗳️ **雅典公民民主**: 人類歷史上最早的直接民主政治實驗。",
+      "🏅 **古代奧林匹克**: 現代奧林匹克運動會的精神與體育歷史源頭。"
+    ],
+    quiz: [
+      {
+        question: "被譽為西方哲學奠基人，因倡導理性詰問而被雅典城邦判處飲鴆身亡的哲學家是？",
+        options: ["A. 柏拉圖", "B. 亞里斯多德", "C. 蘇格拉底", "D. 畢達哥拉斯"],
+        answer: 2,
+        explanation: "蘇格拉底是希臘哲學三哲之首，主張「認識你自己」。"
+      },
+      {
+        question: "開創雅典黃金時代，使直接民主政治達到極致的雅典領袖是？",
+        options: ["A. 伯里克利", "B. 亞歷山大", "C. 庇西特拉圖", "D. 梭倫"],
+        answer: 0,
+        explanation: "伯里克利執政期間發放津貼鼓勵公民參政，建造了帕德嫩神廟。"
+      },
+      {
+        question: "古代奧林匹克運動會最早發源於哪個國家/地區？",
+        options: ["A. 古羅馬", "B. 古希臘", "C. 古埃及", "D. 波斯帝國"],
+        answer: 1,
+        explanation: "公元前776年在古希臘奧林匹亞舉辦了第一屆古代奧運會。"
+      }
+    ]
+  },
+
+  "rome": {
+    id: "rome",
+    region: "western",
+    title: "古羅馬帝國",
+    years: "前753 - 公元476年",
+    eraTag: "超級強權",
+    bgImage: "assets/western_greece_rome.jpg",
+    desc: "從台伯河畔城邦演變為橫跨歐亞非的超級帝國。健全的羅馬法體系、圓頂拱門工程與拉丁文影響深遠。",
+    tags: ["羅馬共和", "凱撒大帝", "羅馬競技場", "十二銅表法"],
+    capital: "羅馬 / 君士坦丁堡",
+    duration: "約1200年",
+    overview: `羅馬經歷了王政、共和與帝國三個時期。共和時期設立執政官與元老院，並頒布《十二銅表法》。
+    凱撒大帝奠定獨裁基礎，其養子屋大維（奧古斯都）開創「羅馬和平」盛世。帝國橫跨地中海，建築如羅馬競技場與高架渠宏偉壯觀。476年西羅馬帝國滅亡，標誌著歐洲中世紀的開始。`,
+    highlight: "「條條大路通羅馬。」羅馬的法律制度、道路工程與軍事管理深刻塑造了近代歐洲文明。",
+    timeline: [
+      { year: "前450年", title: "《十二銅表法》頒布", desc: "羅馬第一部成文法典，打破貴族對法律的壟斷。" },
+      { year: "前44年", title: "凱撒大帝被刺身亡", desc: "凱撒實行終身獨裁，在元老院遭刺殺，共和體制瓦解。" },
+      { year: "前27年", title: "屋大維建立羅馬帝國", desc: "獲尊稱「奧古斯都」，開啟兩百年的「羅馬和平」。" },
+      { year: "公元313年", title: "《米蘭敕令》頒布", desc: "君士坦丁大帝承認基督教合法地位，後成為國教。" },
+      { year: "公元476年", title: "西羅馬帝國滅亡", desc: "日耳曼將領廢黜西羅馬最後一位皇帝，古代歐洲終結。" }
+    ],
+    figures: [
+      { name: "凱撒大帝", role: "羅馬終身獨裁官", icon: "👑", desc: "傑出軍事家與政治家，征服高盧，奠定帝國基礎。" },
+      { name: "屋大維 (奧古斯都)", role: "羅馬第一位皇帝", icon: "🏛️", desc: "開創羅馬帝國，締造和平繁榮的「奧古斯都時代」。" },
+      { name: "西塞羅", role: "羅馬演說家與哲學家", icon: "🗣️", desc: "共和制度堅定捍衛者，將希臘哲學翻譯引進拉丁世界。" }
+    ],
+    achievements: [
+      "🏟️ **羅馬圓形競技場**: 可容納五萬人的水泥拱門巨型競技場。",
+      "⚖️ **羅馬法體系**: 包含《十二銅表法》與民法大典，現代大陸法系的基礎。",
+      "🛣️ **羅馬高架渠與大道**: 精湛的土木工程，建造了貫通帝國數萬公里的石板大道。"
+    ],
+    quiz: [
+      {
+        question: "羅馬帝國第一位獲尊稱為「奧古斯都」的皇帝是？",
+        options: ["A. 凱撒", "B. 屋大維", "C. 暴君尼祿", "D. 君士坦丁"],
+        answer: 1,
+        explanation: "屋大維於公元前27年接受元老院授予的「奧古斯都」（神聖尊貴者）稱號。"
+      },
+      {
+        question: "現代許多國家法律體系的基石，發源於古羅馬的哪一項法律成果？",
+        options: ["A. 漢摩拉比法典", "B. 羅馬法 (十二銅表法)", "C. 拿破崙法典", "D. 大憲章"],
+        answer: 1,
+        explanation: "羅馬法（包含民法大全與十二銅表法）奠定了現代大陸法系的架構。"
+      },
+      {
+        question: "標誌著歐洲古代歷史結束、中世紀開始的重大事件是？",
+        options: ["A. 亞歷山大帝國崩解", "B. 布匿戰爭爆發", "C. 西羅馬帝國滅亡", "D. 東羅馬帝國滅亡"],
+        answer: 2,
+        explanation: "公元476年西羅馬帝國滅亡，歐洲進入了漫長的中世紀時期。"
+      }
+    ]
+  },
+
+  "medieval": {
+    id: "medieval",
+    region: "western",
+    title: "中世紀歐洲",
+    years: "公元476 - 1453年",
+    eraTag: "信仰與騎士",
+    bgImage: "assets/western_hero.jpg",
+    desc: "采邑封建制度與天主教信仰交織的千年中世紀。騎士精神盛行，經歷十字軍東征、哥德式教堂興建與黑死病打擊。",
+    tags: ["騎士精神", "十字軍東征", "哥德式建築", "黑死病"],
+    capital: "君士坦丁堡 / 亞琛 / 巴黎",
+    duration: "約1000年",
+    overview: `西羅馬滅亡後，日耳曼人在歐洲建立了許多王國，其中法蘭克王國的查理曼大帝建立了龐大帝國。
+    中世紀社會以「采邑封建制」與「天主教會」為雙重核心。十字軍東征促進了東西方貿易交流；哥德式教堂（如巴黎聖母院）尖拱與彩色玻璃窗直指天空；14世紀的黑死病雖然摧殘人口，卻也推動了社會變革。`,
+    highlight: "「主是我堅固保障。」天主教會與騎士精神構成了中世紀歐洲社會的精神支柱。",
+    timeline: [
+      { year: "800年", title: "查理曼加冕為帝", desc: "教皇利奧三世為查理曼加冕，法蘭克帝國達鼎盛。" },
+      { year: "1096年", title: "第一次十字軍東征", desc: "教皇烏爾班二世號召東征，攻佔耶路撒冷。" },
+      { year: "1347 - 1351年", title: "黑死病大流行", desc: "鼠疫橫掃歐洲，造成三分之一人口死亡，震撼封建秩序。" },
+      { year: "1453年", title: "拜占庭帝國滅亡", desc: "鄂圖曼帝國攻陷君士坦丁堡，東羅馬帝國滅亡。" }
+    ],
+    figures: [
+      { name: "查理曼大帝", role: "法蘭克國王", icon: "👑", desc: "統一西歐大部分地區，推動「查理曼文藝復興」。" },
+      { name: "聖女貞德", role: "法國民族英雄", icon: "⚔️", desc: "在英法百年戰爭中率領法軍擊敗英軍，奉獻生命的愛國少女。" },
+      { name: "獅心王理查", role: "英格蘭國王", icon: "🛡️", desc: "第三次十字軍東征的傳奇騎士領袖。" }
+    ],
+    achievements: [
+      "🏰 **哥德式大教堂**: 如巴黎聖母院與科隆大教堂，具飛扶壁與彩色花窗玻璃。",
+      "🎓 **歐洲早期大學誕生**: 如牛津大學、劍橋大學與波隆那大學建立。",
+      "🛡️ **騎士文學與法典**: 尊崇勇敢、忠誠、榮譽與保護弱者的騎士道精神。"
+    ],
+    quiz: [
+      {
+        question: "中世紀歐洲建築樣式中，以高聳尖拱、飛扶壁與巨大彩色玻璃花窗為特徵的是？",
+        options: ["A. 羅曼式", "B. 巴洛克式", "C. 哥德式", "D. 洛可可式"],
+        answer: 2,
+        explanation: "哥德式建築追求向天空延伸的高聳感，光線透過彩色玻璃帶來神聖氛圍。"
+      },
+      {
+        question: "在英法百年戰爭中率領法軍解救奧爾良，成為法國民族英雄的少女是？",
+        options: ["A. 伊莉莎白一世", "B. 聖女貞德", "C. 瑪麗安娜", "D. 克麗奧佩脫拉"],
+        answer: 1,
+        explanation: "聖女貞德以堅定信仰率軍抗英，被尊為法國英雄。"
+      },
+      {
+        question: "14世紀橫掃歐洲，造成約三分之一人口死亡並震撼封建社會的大爆發傳染病是？",
+        options: ["A. 天花", "B. 黑死病 (鼠疫)", "C. 霍亂", "D. 西班牙流感"],
+        answer: 1,
+        explanation: "黑死病引發了深遠的經濟與社會變革，加速了中世紀的結束。"
+      }
+    ]
+  },
+
+  "renaissance": {
+    id: "renaissance",
+    region: "western",
+    title: "文藝復興與大航海時代",
+    years: "14 - 17世紀",
+    eraTag: "理性與探索",
+    bgImage: "assets/western_hero.jpg",
+    desc: "思想藝術的大覺醒與地理大發現。人文主義打破神學枷鎖，哥倫布與麥哲倫航向海洋開創全球化新時代。",
+    tags: ["達芬奇", "人文主義", "哥倫布發現新大陸", "日心說"],
+    capital: "佛羅倫斯 / 威尼斯 / 里斯本",
+    duration: "約300年",
+    overview: `文藝復興發源於義大利佛羅倫斯，提倡以人為本的「人文主義」，復興古典希臘羅馬文化。達芬奇、米開朗基羅創造了無與倫比的藝術傑作。
+    與此同時，哥倫布橫渡大西洋到達美洲，麥哲倫船隊完成人類首次環球航行。哥白尼與伽利略提出「日心說」，開啟了現代科學革命。`,
+    highlight: "「知識就是力量。」文藝復興與地理大發現將人類視野拉開至全球文明階段。",
+    timeline: [
+      { year: "1492年", title: "哥倫布發現美洲新大陸", desc: "率領西班牙船隊橫渡大西洋，開啟大航海時代。" },
+      { year: "1503 - 1519年", title: "達芬奇創作《蒙娜麗莎》", desc: "文藝復興全才大師達芬奇繪製永恆傳世名畫。" },
+      { year: "1519 - 1522年", title: "麥哲倫船隊環球航行", desc: "證實地球是圓的，全球航線首次貫通。" },
+      { year: "1543年", title: "哥白尼發表《天體運行論》", desc: "提出「日心說」，震撼天主教會地心說宇宙觀。" }
+    ],
+    figures: [
+      { name: "達芬奇", role: "文藝復興全才大師", icon: "🎨", desc: "畫家、雕塑家、發明家與解剖學家，代表作《蒙娜麗莎》與《最後的晚餐》。" },
+      { name: "哥倫布", role: "大航海家", icon: "⛵", desc: "橫渡大西洋發現新大陸，連結新舊大陸的文明交流。" },
+      { name: "莎士比亞", role: "英國劇作家", icon: "🎭", desc: "文學巨擘，創作《哈姆雷特》、《羅密歐與茱麗葉》等不朽名劇。" },
+      { name: "伽利略", role: "近代物理學之父", icon: "🔭", desc: "使用望遠鏡觀察天體，支持哥白尼日心說，奠定實驗科學精神。" }
+    ],
+    achievements: [
+      "🖼️ **《蒙娜麗莎》與《大衛像》**: 人文主義藝術高峰傑作。",
+      "🌍 **麥哲倫環球航行**: 人類歷史上首次完成環繞地球一周的航海壯舉。",
+      "🔭 **日心說與現代科學法**: 擺脫神學束縛，建立以觀察與實驗為基礎的科學範式。"
+    ],
+    quiz: [
+      {
+        question: "創作《蒙娜麗莎》與《最後的晚餐》，被譽為文藝復興全才巨匠的大師是？",
+        options: ["A. 拉斐爾", "B. 米開朗基羅", "C. 達芬奇 (列奧納多·達文西)", "D. 提香"],
+        answer: 2,
+        explanation: "達芬奇在藝術、科學、工程領域均有卓越貢獻。"
+      },
+      {
+        question: "1492年率領西班牙船隊橫渡大西洋，發現美洲新大陸的大航海家是？",
+        options: ["A. 麥哲倫", "B. 哥倫布", "C. 達伽馬", "D. 迪亞士"],
+        answer: 1,
+        explanation: "哥倫布首航美洲開啟了歐美之間的地理大發現時代。"
+      },
+      {
+        question: "提出了打破天主教會「地心說」統治、認為太陽才是宇宙中心的科學家是？",
+        options: ["A. 牛頓", "B. 達爾文", "C. 哥白尼", "D. 愛因斯坦"],
+        answer: 2,
+        explanation: "哥白尼於1543年出版《天體運行論》提出太陽中心說。"
+      }
+    ]
+  },
+
+  "modern-west": {
+    id: "modern-west",
+    region: "western",
+    title: "工業革命與近現代",
+    years: "18 - 20世紀",
+    eraTag: "科技與變革",
+    bgImage: "assets/western_hero.jpg",
+    desc: "蒸汽機引爆工業革命，啟蒙運動倡導民主自由。科技爆發與兩次世界大戰重塑現代全球秩序。",
+    tags: ["蒸汽機", "啟蒙運動", "法國大革命", "現代科技"],
+    capital: "倫敦 / 巴黎 / 華盛頓",
+    duration: "約250年",
+    overview: `18世紀瓦特改良蒸汽機，開啟了機器生產替代手工勞動的「工業革命」，鐵路與工廠深刻改變了人類的生活型態。
+    啟蒙運動的思想家（伏爾泰、孟德斯鳩、盧梭）提出了自由、平等、三權分立的民主理念，引發了美國獨立戰爭與法國大革命。20世紀科技進步神速，經歷了兩次世界大戰後，人類邁入資訊時代與太空探索領域。`,
+    highlight: "「人人生而平等。」民主政治理念與科學技術創新，共同驅動了現代人類社會的飛躍發展。",
+    timeline: [
+      { year: "1769年", title: "瓦特改良蒸汽機", desc: "獲得蒸汽機專利，揭開第一次工業革命序幕。" },
+      { year: "1776年", title: "美國《獨立宣言》發表", desc: "宣示人人人權與獨立，建立近代第一個民主共和國。" },
+      { year: "1789年", title: "法國大革命爆發", desc: "攻占巴士底監獄，頒布《人權宣言》，摧毀封建專制。" },
+      { year: "1969年", title: "阿波羅11號登月", desc: "阿姆斯壯踩下人類在月球上的第一個腳印。" }
+    ],
+    figures: [
+      { name: "詹姆斯·瓦特", role: "工業革命先驅", icon: "⚙️", desc: "改良萬能蒸汽機，為工業化提供源源不絕的動力。" },
+      { name: "拿破崙", role: "法蘭西第一帝國皇帝", icon: "⚔️", desc: "軍事天才，頒布《拿破崙法典》，將大革命思想播撒至全歐洲。" },
+      { name: "牛頓", role: "物理學巨擘", icon: "🍎", desc: "發現萬有引力定律與三大運動定律，奠定古典物理學基石。" },
+      { name: "愛因斯坦", role: "現代物理學之父", icon: "💡", desc: "提出相對論，開創了質能等價方程式 (E=mc²)。" }
+    ],
+    achievements: [
+      "🚂 **蒸汽機與鐵路網路**: 大幅提升交通運輸與工業生產效率。",
+      "🏛️ **三權分立與民主憲政**: 現代民主國家的政治制衡典範。",
+      "🚀 **相對論與太空探索**: 拓展人類對宇宙本質與空間時間的認識。"
+    ],
+    quiz: [
+      {
+        question: "改良萬能蒸汽機，為第一次工業革命提供強大動力的發明家是？",
+        options: ["A. 愛迪生", "B. 瓦特", "C. 史蒂芬生", "D. 特斯拉"],
+        answer: 1,
+        explanation: "瓦特改良蒸汽機是工業革命最核心的技術突破。"
+      },
+      {
+        question: "1789年爆發並頒布《人權宣言》，喊出「自由、平等、博愛」口號的革命是？",
+        options: ["A. 英國光榮革命", "B. 美國獨立戰爭", "C. 法國大革命", "D. 俄國十月革命"],
+        answer: 2,
+        explanation: "法國大革命極大打擊了歐洲封建勢力，傳播了民主自由思想。"
+      },
+      {
+        question: "發現萬有引力定律與三大運動定律，奠定古典物理學體系的科學家是？",
+        options: ["A. 愛因斯坦", "B. 伽利略", "C. 居禮夫人", "D. 牛頓"],
+        answer: 3,
+        explanation: "艾薩克·牛頓出版《自然哲學的數學原理》，建立了物理學經典體系。"
+      }
+    ]
   }
 };
 
 // 趣味歷史小知識庫
 const HISTORICAL_TRIVIA = [
-  "💡 **你不知道的歷史小知識**：秦始皇統一文字時所採用的標準字體是「小篆」，後來為了書寫快速，民間逐漸流行更簡便的「隸書」。",
-  "💡 **你不知道的歷史小知識**：唐朝長安城實行嚴格的「坊市制」，居民區（坊）與商業區（市）分開，且晚上有宵禁制度！",
-  "💡 **你不知道的歷史小知識**：北宋時期四川商人因為鐵錢太重不便攜帶，聯合創立了世界第一張紙幣「交子」。",
-  "💡 **你不知道的歷史小知識**：著名的「萬里長城」並非單一朝代建成，秦、漢、明等朝代都大規模修築過長城，我們今天看到最完好的是明長城！",
-  "💡 **你不知道的歷史小知識**：古代科舉考試中的「連中三元」，指的是在鄉試、會試、殿試中連續奪得第一名（解元、會元、狀元）。"
+  "💡 **歷史小常識**：秦始皇統一文字時所採用的標準字體是「小篆」，後來為了書寫快速，民間逐漸流行更簡便的「隸書」。",
+  "💡 **歷史小常識**：古希臘的雅典曾經實行「陶片放逐制」，公民可以把心中威脅民主的政客名字刻在陶片上，票數過高者會被放逐10年！",
+  "💡 **歷史小常識**：唐朝長安城實行嚴格的「坊市制」，居民區（坊）與商業區（市）分開，且晚上有宵禁制度！",
+  "💡 **歷史小常識**：古羅馬的混凝土技術非常驚人，羅馬競技場與萬神殿使用了火山灰混凝土，歷經兩千年依然堅固！",
+  "💡 **歷史小常識**：北宋時期四川商人因為鐵錢太重不便攜帶，聯合創立了世界第一張紙幣「交子」。",
+  "💡 **歷史小常識**：文藝復興大師達芬奇習慣使用「鏡像字」（從右往左反向書寫）記錄自己的發明筆記，需要照鏡子才能正常閱讀！"
 ];
 
 // App 狀態管理
 let state = {
   currentDynastyId: null,
+  activeRegion: 'all', // 'all', 'chinese', 'western'
   completedDynasties: JSON.parse(localStorage.getItem('history_completed') || '[]'),
   totalScore: parseInt(localStorage.getItem('history_score') || '0'),
   activeFilter: 'all',
@@ -343,6 +668,7 @@ window.backToCatalog = backToCatalog;
 window.checkAnswer = checkAnswer;
 window.resetQuiz = resetQuiz;
 window.switchToQuizTab = switchToQuizTab;
+window.setRegionFilter = setRegionFilter;
 
 // DOM 載入後初始化
 document.addEventListener('DOMContentLoaded', () => {
@@ -353,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
   showRandomTrivia();
 });
 
-// 監聽網址 Hash 變化 (例如 #sui-tang)
+// 監聽網址 Hash 變化
 window.addEventListener('hashchange', () => {
   const hash = window.location.hash.replace('#', '');
   if (hash && DYNASTIES_DATA[hash]) {
@@ -371,8 +697,24 @@ function initUI() {
   }
 }
 
+// 切換中西方歷史大區
+function setRegionFilter(region) {
+  state.activeRegion = region;
+  document.querySelectorAll('.region-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.region === region);
+  });
+  renderCatalog();
+}
+
 // 綁定事件監聽
 function bindEvents() {
+  // 區域切換頁籤 (全部/中華歷史/西方歷史)
+  document.querySelectorAll('.region-tab').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      setRegionFilter(e.target.dataset.region);
+    });
+  });
+
   // 搜尋列輸入
   const searchInput = document.getElementById('search-input');
   if (searchInput) {
@@ -430,20 +772,24 @@ function renderCatalog() {
 
   const dynastiesList = Object.values(DYNASTIES_DATA);
   const filtered = dynastiesList.filter(dynasty => {
+    // 中西區域過濾
+    const matchRegion = state.activeRegion === 'all' || dynasty.region === state.activeRegion;
+    // 類別過濾
     const matchFilter = state.activeFilter === 'all' || dynasty.eraTag === state.activeFilter;
+    // 搜尋比對
     const matchSearch = !state.searchQuery || 
       dynasty.title.toLowerCase().includes(state.searchQuery) ||
       dynasty.desc.toLowerCase().includes(state.searchQuery) ||
       dynasty.tags.some(t => t.toLowerCase().includes(state.searchQuery));
 
-    return matchFilter && matchSearch;
+    return matchRegion && matchFilter && matchSearch;
   });
 
   if (filtered.length === 0) {
     gridContainer.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 4rem 1rem; color: var(--text-muted);">
         <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">🔍 查無符合條件的歷史內容</p>
-        <p style="font-size: 0.9rem;">請嘗試更換搜尋關鍵字或選擇其他分類。</p>
+        <p style="font-size: 0.9rem;">請嘗試切換「中華歷史 / 西方歷史」頁籤，或變更搜尋關鍵字。</p>
       </div>
     `;
     return;
@@ -451,9 +797,11 @@ function renderCatalog() {
 
   filtered.forEach(dynasty => {
     const isCompleted = state.completedDynasties.includes(dynasty.id);
+    const regionFlag = dynasty.region === 'chinese' ? '🇨🇳 中華' : '🏛️ 西方';
     const cardHtml = `
       <div class="dynasty-card" onclick="openDynastyView('${dynasty.id}')" style="cursor: pointer;">
         <div class="card-banner" style="background-image: url('${dynasty.bgImage}')">
+          <span class="region-badge">${regionFlag}</span>
           <span class="era-badge">${dynasty.eraTag}</span>
         </div>
         <div class="dynasty-card-body">
@@ -488,17 +836,14 @@ function openDynastyView(dynastyId) {
   state.currentDynastyId = dynastyId;
   window.location.hash = dynastyId;
 
-  // 切換頁面顯示
   document.getElementById('catalog-view').style.display = 'none';
   const detailView = document.getElementById('dynasty-detail-view');
   detailView.classList.add('active');
 
-  // 滾動回頂部
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // 渲染朝代標頭資訊
   document.getElementById('detail-title').textContent = data.title;
-  document.getElementById('detail-subtitle').textContent = `${data.years} · 首都：${data.capital} · 歷時：${data.duration}`;
+  document.getElementById('detail-subtitle').textContent = `${data.years} · 都城/中心：${data.capital} · 歷時/跨度：${data.duration}`;
   document.getElementById('detail-breadcrumb-current').textContent = data.title;
   
   const headerCard = document.getElementById('dynasty-header-bg');
@@ -506,13 +851,11 @@ function openDynastyView(dynastyId) {
     headerCard.style.backgroundImage = `url('${data.bgImage}')`;
   }
 
-  // 渲染各個 Tab 內容
   renderOverviewPanel(data);
   renderTimelinePanel(data);
   renderFiguresPanel(data);
   renderQuizPanel(data);
 
-  // 初始化 Tab 按鈕處理
   initTabs();
 }
 
@@ -573,18 +916,22 @@ function renderOverviewPanel(data) {
       <div>
         <div class="sidebar-card">
           <h4 style="color: var(--primary-gold); margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
-            📊 朝代檔案庫
+            📊 歷史檔案庫
           </h4>
           <div class="stat-item">
-            <span class="stat-label">朝代名稱</span>
+            <span class="stat-label">文明/朝代</span>
             <span class="stat-val">${data.title}</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">所屬區域</span>
+            <span class="stat-val">${data.region === 'chinese' ? '🇨🇳 中華歷史' : '🏛️ 西方歷史'}</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">歷史時期</span>
             <span class="stat-val">${data.years}</span>
           </div>
           <div class="stat-item">
-            <span class="stat-label">都城所在地</span>
+            <span class="stat-label">中心都城</span>
             <span class="stat-val">${data.capital}</span>
           </div>
           <div class="stat-item">
@@ -595,7 +942,7 @@ function renderOverviewPanel(data) {
 
         <div class="sidebar-card" style="text-align: center; background: linear-gradient(135deg, rgba(168, 46, 46, 0.15), rgba(212, 175, 55, 0.1));">
           <h4 style="color: var(--primary-gold); margin-bottom: 0.5rem;">🎯 課後學習小挑戰</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">完成該朝代 3 道知識題即可標記學習完成！</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">完成該單元 3 道知識題即可標記學習完成！</p>
           <button class="btn-learn" style="width: 100%;" onclick="switchToQuizTab()">立即開始測驗 ✍️</button>
         </div>
       </div>
